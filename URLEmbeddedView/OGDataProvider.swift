@@ -104,8 +104,10 @@ extension OGDataProvider {
                 completion?(ogData, error)
                 return
             }
+            let encodingName = response?.textEncodingName
+            let encodingType = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName))
             guard let data = data,
-                  let html = Kanna.HTML(html: data, encoding: NSUTF8StringEncoding),
+                  let html = Kanna.HTML(html: data, encoding: encodingType),
                   let header = html.head else {
                 completion?(ogData, nil)
                 return
